@@ -4,7 +4,7 @@ import fitz  # PyMuPDF
 import streamlit as st
 
 # Set page configuration (title and favicon)
-st.set_page_config(page_title="ChatMate AI", page_icon="static/robot.png")  # You can replace :robot_face: with your custom favicon
+st.set_page_config(page_title="ChatMate AI", page_icon="static/robot.png")
 
 # Configure the Google Generative AI API
 genai.configure(api_key="AIzaSyAfBnFjJ-80s7iy71wLVGNh2q3NccSjVo0")  # Replace with your actual API key
@@ -31,9 +31,22 @@ def extract_text_from_pdf(pdf_path):
             text += page.get_text()
     return text
 
+# Function to clear the uploads directory
+def clear_uploads_directory(upload_dir="uploads"):
+    for filename in os.listdir(upload_dir):
+        file_path = os.path.join(upload_dir, filename)
+        try:
+            if os.path.isfile(file_path):
+                os.remove(file_path)  # Remove file
+        except Exception as e:
+            st.error(f"Error removing {file_path}: {str(e)}")
+
 # Streamlit App
 def main():
-    st.title("Welcome to ChatMate...")
+    # Clear the uploads directory when the app is refreshed
+    clear_uploads_directory()
+
+    st.title("Welcome to ChatMate AI...")
     st.markdown("Ask, upload, and discover—AI at your service.")
     st.markdown("~ Sahil Murhekar [Visit](https://aiwithsahil.vercel.app)", unsafe_allow_html=True)  # Add your portfolio URL here
 
@@ -97,3 +110,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
