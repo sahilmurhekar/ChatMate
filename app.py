@@ -7,7 +7,7 @@ import streamlit as st
 st.set_page_config(page_title="ChatMate AI", page_icon="static/robot.png")
 
 # Configure the Google Generative AI API
-genai.configure(api_key="AIzaSyAfBnFjJ-80s7iy71wLVGNh2q3NccSjVo0")  # Replace with your actual API key
+genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))  # Replace with your actual API key
 
 # Set generation configuration
 generation_config = {
