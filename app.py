@@ -32,7 +32,7 @@ def extract_text_from_pdf(pdf_path):
     return text
 
 # Function to clear the uploads directory
-def clear_uploads_directory(upload_dir="uploads"):
+def clear_uploads_directory(upload_dir="uploads/"):
     for filename in os.listdir(upload_dir):
         file_path = os.path.join(upload_dir, filename)
         try:
