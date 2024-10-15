@@ -2,3 +2,4 @@ PyMuPDF
 google.generativeai
 fitz
 streamlit
+frontend
