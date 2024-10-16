@@ -11,10 +11,10 @@ genai.configure(api_key=os.environ.get('GOOGLE_API_KEY'))  # Replace with your a
 
 # Set generation configuration
 generation_config = {
-    "temperature": 1,
-    "top_p": 0.95,
-    "top_k": 64,
-    "max_output_tokens": 8192,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "top_k": 100,
+    "max_output_tokens": 32768,
 }
 
 # Initialize the generative model
@@ -60,7 +60,7 @@ def main():
 
     # Sidebar for PDF Upload
     st.sidebar.header("Upload PDF Documents")
-    pdf_files = st.sidebar.file_uploader("Upload PDFs", type=["pdf"], accept_multiple_files=True)
+    pdf_files = st.sidebar.file_uploader("Upload PDFs (Max 10MB each)", type=["pdf"], accept_multiple_files=True)
 
     # Initialize PDF text variable
     pdf_text = ""
@@ -68,6 +68,11 @@ def main():
     if pdf_files:
         pdf_texts = []  # Store the extracted text from each PDF
         for pdf_file in pdf_files:
+            # Check file size
+            if pdf_file.size > 10 * 1024 * 1024:  # 10 MB in bytes
+                st.sidebar.error(f"File {pdf_file.name} exceeds 10MB limit. Skipping.")
+                continue
+
             # Save each uploaded PDF temporarily
             pdf_path = os.path.join("uploads", pdf_file.name)
             with open(pdf_path, "wb") as f:
@@ -79,7 +84,7 @@ def main():
 
         # Combine text from all PDFs
         pdf_text = "\n\n".join(pdf_texts)
-        st.sidebar.success(f"Uploaded {len(pdf_files)} PDF(s) successfully!")
+        st.sidebar.success(f"Uploaded {len(pdf_texts)} PDF(s) successfully!")
 
     # Display chat messages from history
     for message in st.session_state.chat_history:
@@ -110,4 +115,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
