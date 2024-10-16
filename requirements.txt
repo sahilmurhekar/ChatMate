@@ -1,4 +1,4 @@
-PyMuPDF==1.21.1
+PyMuPDF
 google.generativeai
 fitz
 streamlit
