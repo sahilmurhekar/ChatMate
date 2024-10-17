@@ -1,6 +1,6 @@
 import os
 import google.generativeai as genai
-import fitz  # PyMuPDF
+import PyPDF2
 import streamlit as st
 
 # Set page configuration (title and favicon)
@@ -25,10 +25,11 @@ model = genai.GenerativeModel(
 
 # Function to extract text from a PDF
 def extract_text_from_pdf(pdf_path):
-    with fitz.open(pdf_path) as doc:
-        text = ""
-        for page in doc:
-            text += page.get_text()
+    text = ""
+    with open(pdf_path, 'rb') as file:
+        reader = PyPDF2.PdfReader(file)
+        for page in reader.pages:
+            text += page.extract_text()
     return text
 
 # Function to clear the uploads directory
