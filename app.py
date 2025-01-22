@@ -49,7 +49,7 @@ def main():
 
     st.title("Welcome to ChatMate AI...")
     st.markdown("Ask, upload, and discover—AI at your service.")
-    st.markdown("~ Sahil Murhekar [Visit](https://aiwithsahil.vercel.app)", unsafe_allow_html=True)  # Add your portfolio URL here
+    st.markdown("~ Sahil Murhekar [Visit](https://sahilmurhekar.vercel.app)", unsafe_allow_html=True)  # Add your portfolio URL here
 
     # Initialize chat_history in session state
     if 'chat_history' not in st.session_state:
